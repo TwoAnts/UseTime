@@ -36,7 +36,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        
+        <activity android:name=".ShareRenrenActivity" >
+        </activity>
+            
         <receiver android:name=".BootCompletedReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -45,9 +48,10 @@
 
         <service android:name=".UseTimeService" >
         </service>
-        
-         <receiver android:name=".ScreenActionReceiver" >
+
+        <receiver android:name=".ScreenActionReceiver" >
         </receiver>
+
     </application>
 
 </manifest>

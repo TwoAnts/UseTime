@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="我今天的使用时间："
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/timetxtv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:gravity="center_horizontal"
+        android:text="0分钟"
+        android:textSize="50sp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:ignore="HardcodedText" />
+    
+    <TextView 
+        android:id="@+id/textView2"
+        android:text="我过去的使用时间："
+        android:textSize="20sp"
+        tools:ignore="HardcodedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timetxtv"
+        android:layout_alignParentLeft="true" />
+    
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/textView2" >
+
+        <TextView 
+            android:id="@+id/historytxtv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/share_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:drawableLeft="@drawable/renren_logo_32"
+        android:text="人人分享"
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+    
+    <Button
+        android:id="@+id/refresh_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/share_btn"
+        android:layout_alignParentLeft="true"
+        android:text="刷新"
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+</RelativeLayout>
