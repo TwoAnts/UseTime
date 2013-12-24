@@ -22,9 +22,18 @@ import android.widget.Toast;
 
 public class ShareRenrenActivity extends Activity implements OnClickListener{
 	
+	/**
+	 * If you want to feed a new message(about your use time) to RenRen, 
+	 * you should set action (e.g. ACTION_SHARE_LONGTIME) in this activity.
+	 * And you should put (long)time to intent with key "use_time".
+	 * @author hzy
+	 */
+	
 	public static final String TAG = "ShareRenrenActivity";
 	
+	//表示持续使用时间的长度
 	public static final String ACTION_SHARE_LONGTIME = "com.lzmy.tellmewakeandlock.acton.sha_longtime";
+	//表示每天使用的时间
 	public static final String ACTION_SHARE_DAYTIME = "com.lzmy.tellmewakeandlock.acton.sha_daytime";
 	
 	private Button loginBtn = null;
@@ -37,11 +46,11 @@ public class ShareRenrenActivity extends Activity implements OnClickListener{
 	private ProgressDialog mProgressDialog;
 	private Intent mIntent = null;
 	
-	private static final String APP_ID = "245278";
+	private static final String APP_ID = "245854";
 
-	private static final String API_KEY = "484024483cbf464fad1c8369d84be953";
+	private static final String API_KEY = "15690d970b8643ff826813f74a102403";
 
-	private static final String SECRET_KEY = "f39e18b26c0c47098e7915f0abdf43fb";
+	private static final String SECRET_KEY = "d8e9a9df03444449b7f4523f96fba88a";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +96,14 @@ public class ShareRenrenActivity extends Activity implements OnClickListener{
 		long time = 0;
 		String title = null;
 		if(mIntent.getAction().equals(ACTION_SHARE_DAYTIME)){
-   		 	time = mIntent.getLongExtra("today_time", 0);
-   		 	title = "每天猜猜这个数字是什么 ";
+   		 	time = mIntent.getLongExtra("use_time", 0);
+   		 	title = UseTimeService.tranTimeToString(time)+" 你敢信！？";
    	 	}else if(mIntent.getAction().equals(ACTION_SHARE_LONGTIME)){
-   	 		time = mIntent.getLongExtra("long_time", 0);
-   	 		title = "长度猜猜这个数字是什么";
+   	 		time = mIntent.getLongExtra("use_time", 0);
+   	 		title = UseTimeService.tranTimeToString(time)+" 你敢信！？";
    	 	}
         if(time != 0){ 
-        	shareConEdt.setText(title+"--"+(int)time/60000);
+        	shareConEdt.setText(title);
          	Log.d(TAG, "edt set txt");
          }
          
@@ -160,21 +169,22 @@ public class ShareRenrenActivity extends Activity implements OnClickListener{
 		
 		switch(v.getId()){
 			case R.id.share_btn:
+					//message title description targeturl 为必选	
 				 	PutFeedParam param = new PutFeedParam();
-	                param.setTitle("title");
+	                param.setTitle("呵呵");
 				 	String shareCon = shareConEdt.getText().toString();
 				 	
 				 	if(!TextUtils.isEmpty(shareCon)){
-				 		param.setMessage("#...#" + shareCon);
+				 		param.setMessage("#呵呵#" + shareCon);
 				 	}else{
 				 		Toast.makeText(ShareRenrenActivity.this, "内容不能为空!", Toast.LENGTH_SHORT).show();
 				 		return;
 				 	}
-	                param.setDescription("description");
+	                param.setDescription("闹着玩的！");
 //	                param.setActionName("actionName");
 //	                param.setActionTargetUrl("http://www.renren.com");
 //	                param.setSubtitle("subtitle");
-	                param.setImageUrl("http://t04.pic.sogou.com/49a81c7bb4e60fa9_i.jpg");
+	                param.setImageUrl("http://pic.pp3.cn/uploads/20121001j/bz/138.jpg");
 	                param.setTargetUrl("http://www.renren.com");
 	                
 	                if (mProgressDialog == null) {

@@ -119,6 +119,7 @@ public class UseTimeService extends Service{
 		
 		if(todayTime != tranTimeToToday(System.currentTimeMillis())){
 			todayTime = tranTimeToToday(System.currentTimeMillis());
+			timeSum = 0;
 		}
 		
 		timeSum += 60000;
@@ -139,57 +140,57 @@ public class UseTimeService extends Service{
 		return dayFormat.format(System.currentTimeMillis());
 	}
 	
-	private void whenUseTooLong(){
-		String[] strings = new String[2];
-		boolean flag = false;
-		switch((int)(timeSum/1800000)){
-			case 1:
-				strings[0] = "你已经使用了超过30分钟！";
-				strings[1] = "李小姐温馨提示！";
-				strings[1] = "点击分享到人人！";
-				flag = true;
-				break;
-			case 2:
-				strings[0] = "你已经使用了超过一个小时！";
-				strings[1] = "李小姐提醒您爱护眼睛！";
-				strings[1] = "点击分享到人人！";
-				flag = true;
-				break;
-			case 4:
-				strings[0] = "你已经使用了超过两个小时！";
-				strings[1] = "李小姐提醒您注意休息！";
-				strings[1] = "点击分享到人人！";
-				flag = true;
-				break;
-			case 6:
-				strings[0] = "你已经使用了超过三个小时！";
-				strings[1] = "李小姐提醒您注意身体！";
-				strings[1] = "点击分享到人人！";
-				flag = true;
-				break;
-			case 8:
-				strings[0] = "你已经使用了超过四个小时！";
-				strings[1] = "李小姐提醒注意手机电量！";
-				strings[1] = "点击分享到人人！";
-				flag = true;
-				break;
-			case 10:
-				strings[0] = "Legendary！超过五个小时！";
-				strings[1] = "李小姐已经去睡觉了！";
-				strings[1] = "点击分享到人人！";
-				flag = true;
-				break;
-		}
-		if(flag == true){
-			Message msg = new Message();
-			msg.arg1 = 1;
-			msg.obj = strings;
-			msg.what = 0x222;
-			outNotification(msg);
-		}
-		
-	}
-	
+//	private void whenUseTooLong(){
+//		String[] strings = new String[2];
+//		boolean flag = false;
+//		switch((int)(timeSum/1800000)){
+//			case 1:
+//				strings[0] = "你已经使用了超过30分钟！";
+//				strings[1] = "李小姐温馨提示！";
+//				strings[1] = "点击分享到人人！";
+//				flag = true;
+//				break;
+//			case 2:
+//				strings[0] = "你已经使用了超过一个小时！";
+//				strings[1] = "李小姐提醒您爱护眼睛！";
+//				strings[1] = "点击分享到人人！";
+//				flag = true;
+//				break;
+//			case 4:
+//				strings[0] = "你已经使用了超过两个小时！";
+//				strings[1] = "李小姐提醒您注意休息！";
+//				strings[1] = "点击分享到人人！";
+//				flag = true;
+//				break;
+//			case 6:
+//				strings[0] = "你已经使用了超过三个小时！";
+//				strings[1] = "李小姐提醒您注意身体！";
+//				strings[1] = "点击分享到人人！";
+//				flag = true;
+//				break;
+//			case 8:
+//				strings[0] = "你已经使用了超过四个小时！";
+//				strings[1] = "李小姐提醒注意手机电量！";
+//				strings[1] = "点击分享到人人！";
+//				flag = true;
+//				break;
+//			case 10:
+//				strings[0] = "Legendary！超过五个小时！";
+//				strings[1] = "李小姐已经去睡觉了！";
+//				strings[1] = "点击分享到人人！";
+//				flag = true;
+//				break;
+//		}
+//		if(flag == true){
+//			Message msg = new Message();
+//			msg.arg1 = 1;
+//			msg.obj = strings;
+//			msg.what = 0x222;
+//			outNotification(msg);
+//		}
+//		
+//	}
+//	
 	/**
 	 * pull a notification, whose title is strings[0], text is strings[1]. 
 	 * @param msg Message. from class MissLi
@@ -212,7 +213,7 @@ public class UseTimeService extends Service{
 		Intent intent = new Intent(this, ShareRenrenActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.setAction(ShareRenrenActivity.ACTION_SHARE_LONGTIME);
-		intent.putExtra("long_time", timeSum);
+		intent.putExtra("use_time", timeSum);
 		//你懂得
 		PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		//构造notification
