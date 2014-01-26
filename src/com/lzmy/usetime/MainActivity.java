@@ -1,6 +1,7 @@
 package com.lzmy.usetime;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
@@ -37,11 +39,15 @@ public class MainActivity extends Activity {
 	private String mapName = null;
 	//通过读取文件获得，每点击刷新，会被刷新
 	private Map<Long, Long> mMap = null;
+	
+	ArrayList<long[]> list = null;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_test);
+		list = new ArrayList<long[]>();
 		initView();
 		
 		todayTime = UseTimeService.tranTimeToToday(System.currentTimeMillis());
@@ -52,14 +58,18 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(MainActivity.this, UseTimeService.class);
 //		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startService(intent);
+		
+		intent.setClass(MainActivity.this, LineChartActivity.class);
+		intent.putExtra("list", list);
+//		startActivity(intent);
 	}
 	
 	private void initView(){
-		dayFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+		dayFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		timetxtv = (TextView)findViewById(R.id.timetxtv);
-		historytxtv = (TextView)findViewById(R.id.historytxtv);
 		
 		refreshBtn = (Button)findViewById(R.id.refresh_btn);
+		historytxtv = (TextView)findViewById(R.id.historytxtv);
 		refreshBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -87,6 +97,7 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		
 	}
 	
 	//第一次读取map使用
@@ -181,13 +192,15 @@ public class MainActivity extends Activity {
 				return -mapping1.getKey().compareTo(mapping2.getKey()); 
 			} 
 		}); 
+		list.clear();
 		  
 		//遍历list,输出  格式："yyyy-MM-dd"+"  "+"时间"+"\n"
 		for(Map.Entry<Long,Long> mapping:mappingList){ 
 			builder.append(dayFormat.format(mapping.getKey())
-					  +"  "//注意空格数为2
+					  +"   "//注意空格数为3
 					  +UseTimeService.tranTimeToString(mapping.getValue())
 					  +"\n");
+			list.add(new long[]{mapping.getKey(), mapping.getValue()});
 		} 
 		  
 //		builder.append("--------------\n");

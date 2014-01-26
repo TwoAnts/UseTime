@@ -97,10 +97,10 @@ public class ShareRenrenActivity extends Activity implements OnClickListener{
 		String title = null;
 		if(mIntent.getAction().equals(ACTION_SHARE_DAYTIME)){
    		 	time = mIntent.getLongExtra("use_time", 0);
-   		 	title = UseTimeService.tranTimeToString(time)+" 你敢信！？";
+   		 	title = "今天使用手机"+UseTimeService.tranTimeToString(time)+" 你敢信！？";
    	 	}else if(mIntent.getAction().equals(ACTION_SHARE_LONGTIME)){
    	 		time = mIntent.getLongExtra("use_time", 0);
-   	 		title = UseTimeService.tranTimeToString(time)+" 你敢信！？";
+   	 		title = "连续使用手机"+UseTimeService.tranTimeToString(time)+" 你敢信！？";
    	 	}
         if(time != 0){ 
         	shareConEdt.setText(title);
@@ -171,16 +171,16 @@ public class ShareRenrenActivity extends Activity implements OnClickListener{
 			case R.id.share_btn:
 					//message title description targeturl 为必选	
 				 	PutFeedParam param = new PutFeedParam();
-	                param.setTitle("呵呵");
+	                param.setTitle("测试");
 				 	String shareCon = shareConEdt.getText().toString();
 				 	
 				 	if(!TextUtils.isEmpty(shareCon)){
-				 		param.setMessage("#呵呵#" + shareCon);
+				 		param.setMessage(shareCon);
 				 	}else{
 				 		Toast.makeText(ShareRenrenActivity.this, "内容不能为空!", Toast.LENGTH_SHORT).show();
 				 		return;
 				 	}
-	                param.setDescription("闹着玩的！");
+	                param.setDescription("这是一只猫！");
 //	                param.setActionName("actionName");
 //	                param.setActionTargetUrl("http://www.renren.com");
 //	                param.setSubtitle("subtitle");
